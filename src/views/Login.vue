@@ -39,6 +39,7 @@ export default {
               return;
             }
             if(this.user.name=='ranjing'&&this.user.psw=='123456'){
+              window.sessionStorage.setItem('access_token','ranjing123456');
               this.$router.push({path: '/check'});
             }else{
               alert('用户名密码不对!');
