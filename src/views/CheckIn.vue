@@ -2,13 +2,15 @@
   <div>
       <pageheader :sub="1"></pageheader>
       <h1>测试页面1</h1>
+      <h2>个人通讯录</h2>
+      <router-view></router-view>
   </div>
 </template>
 
 <script>
 
-import pageHeader from '../components/pageHeader'
 import $ from 'jquery';
+import pageHeader from '../components/pageHeader'
 
 export default {
   name: 'CheckIn',
@@ -20,12 +22,17 @@ export default {
   components: {
       pageheader: pageHeader
   },
-  created (){
+  beforeCreate () {
+    if(!window.sessionStorage.getItem('access_token')){
+      this.$router.push({path: '/'});
+    }
+  },
+  created () {
     this.sub = 1;
     console.log('测试页面1加载成功...');
   },
   methods:{
-    goback() {
+    goback () {
             window.history.go(-1);
       }
   }
