@@ -43,6 +43,7 @@ export default {
               return;
             }
             if(this.user.name=='ranjing'&&this.user.psw=='123456'){
+              window.sessionStorage.setItem('access_token','ranjing123456');
               this.$router.push({path: '/check'});
               window.sessionStorage.setItem('access_token','ranjing123456')
             }else{
