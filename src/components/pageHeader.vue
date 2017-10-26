@@ -41,7 +41,7 @@ export default {
   },
   methods:{
     clearSession () {
-      window.sessionStorage.removeItem('access_token');
+      window.sessionStorage.clear();
       this.$router.push({path: '/'});
     }
   }

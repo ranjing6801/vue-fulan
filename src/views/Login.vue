@@ -30,25 +30,74 @@ export default {
   },
   created () {
     console.log('登录页面加载成功...');
+
+    // $.get('http://192.168.1.85:3002/login', function(data) {
+    //   console.log('data:',data)
+    // });
+
+    // this.$http.get('http://192.168.1.85:3002/item')
+    // .then((res)=>{
+    //   console.log('res:',res);
+    // }, (err)=>{
+    //   console.log('error:',err);
+    // })
+
   },
   methods:{
         login () {
-            if(this.user.name==''){
+            if( this.user.name.trim()=='' ){
               alert('请输入用户名!');
               //console.log('btns:',$('.btns'));
               return
             }
-            if(this.user.psw==''){
+            if( this.user.psw.trim()=='' ){
               alert('请输入密码!');
               return;
             }
-            if(this.user.name=='ranjing'&&this.user.psw=='123456'){
-              window.sessionStorage.setItem('access_token','ranjing123456');
-              this.$router.push({path: '/check'});
-              window.sessionStorage.setItem('access_token','ranjing123456')
-            }else{
-              alert('用户名密码不对!');
-            }
+
+            var that = this;
+
+            // $.ajax({
+            //     url: 'http://192.168.1.85:3002/login?name='+that.user.name+'&&password='+that.user.psw,
+            //     type: 'get',
+            //     data: {
+
+            //     },
+            //     success: function(res){
+            //         console.log('res:',res);
+            //         if(res.state == 2){
+            //             //sessionStorage.setItem('username',that.user.name);
+            //             //sessionStorage.setItem('password',that.user.psw);
+            //             //sessionStorage.setItem('access_token',res.token);
+            //         }else{
+
+            //       }
+            //     }
+            // });
+
+            this.$http.get('http://192.168.1.85:3002/login',{params: {'name': this.user.name,'password':this.user.psw}})
+            .then( (res)=>{
+              if( res.body.state == 2 ){
+                console.log('res',res);
+                alert('登录成功！');
+                this.$router.push({path: '/check'});
+                window.sessionStorage.setItem('username',this.user.name);
+                window.sessionStorage.setItem('password',this.user.psw);
+                window.sessionStorage.setItem('access_token',res.body.token);
+              }else{
+                console.log('res',res);
+                alert('用户名或密码错误！');
+              }
+            }, (err)=>{
+               console.log('err:',err);
+            } )
+
+            // if(this.user.name=='ranjing'&&this.user.psw=='123456'){
+            //   this.$router.push({path: '/check'});
+            //   window.sessionStorage.setItem('access_token','ranjing123456')
+            // }else{
+            //   alert('用户名密码不对!');
+            // }
         }
   }
 }

@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VueResource from 'vue-resource'
 import Router from 'vue-router'
 import Login from '@/views/Login'
 import CheckIn from '@/views/CheckIn'
@@ -9,13 +10,10 @@ import List from '@/views/List'
 import Person from '@/views/Person'
 
 Vue.use(Router)
+Vue.use(VueResource)
 
 export default new Router({
   routes: [
-    {
-      path: '*',
-      redirect:'/'
-    },
     {
       path: '/',
       name: 'login',
@@ -23,7 +21,6 @@ export default new Router({
     },
     {
       path: '/check',
-      name: 'check',
       component: CheckIn,
       children:[
         {

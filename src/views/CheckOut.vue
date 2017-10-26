@@ -13,18 +13,23 @@ export default {
   name: 'CheckOut',
   data () {
     return {
-      
+
     }
   },
   components: {
       pageheader: pageHeader
+  },
+  beforeCreate () {
+    if(!window.sessionStorage.getItem('access_token')){
+      this.$router.push({path: '/'});
+    }
   },
   created (){
     this.sub = 3;
     console.log('测试页面3加载成功...');
   },
   methods:{
-    
+
   }
 }
 </script>

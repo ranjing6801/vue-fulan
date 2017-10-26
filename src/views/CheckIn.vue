@@ -2,7 +2,7 @@
   <div>
       <pageheader :sub="1"></pageheader>
       <h1>测试页面1</h1>
-      <h2>个人通讯录</h2>
+      <h2>员工列表</h2>
       <router-view></router-view>
   </div>
 </template>
@@ -40,5 +40,7 @@ export default {
 </script>
 
 <style scoped>
-
+h1,h2{
+  margin: 30px 0;
+}
 </style>
