@@ -20,7 +20,7 @@
           </div>
           <div class="page-user">
               <span>欢迎您，siri</span>
-              <i>您是 校长</i>
+              <i>您是 校长 <em @click="clearSession">退出</em></i>
           </div>
       </div>
   </div>
@@ -33,14 +33,17 @@ export default {
   props: ['sub'],
   data () {
     return {
-      
+
     }
   },
-  created (){
-    
+  created () {
+
   },
   methods:{
-    
+    clearSession () {
+      window.sessionStorage.removeItem('access_token');
+      this.$router.push({path: '/'});
+    }
   }
 }
 </script>
@@ -107,6 +110,10 @@ export default {
 .page-user span{
     display: block;
     margin-bottom: 4px;
+}
+.page-user em{
+    cursor: pointer;
+    font-size: 12px;
 }
 
 </style>

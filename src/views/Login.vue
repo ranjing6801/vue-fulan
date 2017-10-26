@@ -18,6 +18,9 @@
 </template>
 
 <script>
+
+import $ from 'jquery';
+
 export default {
   name: 'Login',
   data () {
@@ -29,9 +32,10 @@ export default {
     console.log('登录页面加载成功...');
   },
   methods:{
-        login() {
+        login () {
             if(this.user.name==''){
               alert('请输入用户名!');
+              //console.log('btns:',$('.btns'));
               return
             }
             if(this.user.psw==''){
@@ -40,6 +44,7 @@ export default {
             }
             if(this.user.name=='ranjing'&&this.user.psw=='123456'){
               this.$router.push({path: '/check'});
+              window.sessionStorage.setItem('access_token','ranjing123456')
             }else{
               alert('用户名密码不对!');
             }
@@ -73,7 +78,7 @@ export default {
 }
 .box-logo img{
     height: 42px;
-    margin-left: 58px;
+    margin-left: 8px;
     margin-right: 46px;
 }
 .box-user{
@@ -128,7 +133,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-} 
+}
 .btns button{
     width: 240px;
     height: 48px;
