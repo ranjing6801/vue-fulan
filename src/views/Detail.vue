@@ -24,6 +24,11 @@ export default {
   components: {
       pageheader: pageHeader
   },
+  beforeCreate () {
+    if(!window.sessionStorage.getItem('access_token')){
+      this.$router.push({path: '/'});
+    }
+  },
   created (){
     this.sub = 4;
     console.log('测试页面4加载成功...');
