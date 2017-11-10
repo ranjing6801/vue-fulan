@@ -1,55 +1,44 @@
 import Vue from 'vue'
-import VueResource from 'vue-resource'
 import Router from 'vue-router'
-import Login from '@/views/Login'
-import CheckIn from '@/views/CheckIn'
-import CheckOut from '@/views/CheckOut'
-import CheckResult from '@/views/CheckResult'
-import Detail from '@/views/Detail'
-import List from '@/views/List'
-import Person from '@/views/Person'
+import VueResource from 'vue-resource'
+import Home from '@/views/Home'
+import MyInfo from '@/views/MyInfo'
+import MyInfoList from '@/views/MyInfoList'
+import MysendList from '@/views/MysendList'
+import MyReceiveList from '@/views/MyReceiveList'
 
 Vue.use(Router)
 Vue.use(VueResource)
 
 export default new Router({
+  mode:'hash',
   routes: [
     {
       path: '/',
-      name: 'login',
-      component: Login
+      name: 'home',
+      component: Home
     },
     {
-      path: '/check',
-      component: CheckIn,
+      path: '/myinfo',
+      name: 'myinfo',
+      component: MyInfo,
       children:[
         {
            path: '/',
-           name: 'list',
-           component: List
-            },
-            {
-               path: '/person/:personId',
-               name: 'person',
-               component: Person
-            }
-
+           name: 'myinfolist',
+           component: MyInfoList
+        },
+        {
+           path: '/mysendlist',
+           name: 'mysendlist',
+           component: MysendList
+        },
+        {
+           path: '/myreceivelist',
+           name: 'myreceivelist',
+           component: MyReceiveList
+        }
       ]
-    },
-    {
-      path: '/out',
-      name: 'out',
-      component: CheckOut
-    },
-    {
-      path: '/result',
-      name: 'result',
-      component: CheckResult
-    },
-    {
-      path: '/detail',
-      name: 'detail',
-      component: Detail
     }
   ]
 })
