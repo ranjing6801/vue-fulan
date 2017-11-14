@@ -24,12 +24,20 @@
                       <div class="list">
                           <i class="after">1</i>
                           <span class="span1">第一步：下载成绩录入模板</span>
-                          <span class="down">2017-11-11 语文成绩录入模板</span>
+                          <a class="down">2017-11-11 语文成绩录入模板</a>
                       </div>
                       <div class="list">
                           <i class="after">2</i>
                           <span  class="span1">第二步：上传已经录入成绩的模板</span>
-                          <span class="up">点击上传</span>
+                          <div>
+                              <a class="up">
+                              点击上传
+                              <label for="file" >
+                                  <input @change="fileChange" type="file" name="file" id="file" />
+                              </label>
+                              </a>
+                          </div>
+
                       </div>
                       <div class="list">
                           <i>3</i>
@@ -179,11 +187,15 @@ export default {
     }
   },
   created () {
-    
+
   },
   methods:{
     toPaper1 () {
       this.$router.push({path:'/createPaper'})
+    },
+    fileChange (e) {
+      alert('上传成功！');
+      console.log('上传的文件:',e.target.files);
     }
   }
 }
@@ -270,7 +282,7 @@ export default {
   margin-bottom: 28px;
 }
 .list span{
-  
+
 }
 .list .span1{
   display: inline-block;
@@ -281,6 +293,26 @@ export default {
   color: #ff7e28;
   cursor: pointer;
   text-indent: 114px;
+  position: relative;
+}
+.up label{
+  position: absolute;
+  width:100%;
+  height:100%;
+  background: transparent;
+  left:0;
+  top:0;
+  cursor: pointer;
+  display: block;
+}
+.up input[type="file"]{
+  width:0;
+  overflow: hidden;
+  border:0;
+  position: absolute;
+  left:0;
+  top:0;
+  appearance:none;
 }
 .down{
   background: url('/static/down.png') no-repeat 68px center;
