@@ -14,7 +14,7 @@
           <div class="more-div" v-show="slideDown"><p class="abs-p">高一(4)班,高一(5)班</p></div>
       </div>
       <div class="create">
-          <button>+ 创建</button>
+          <button @click="isModal=true">+ 创建</button>
           <p>点我可以创建通知、作业或成绩单</p>
       </div>
       <div class="list-bar">
@@ -34,11 +34,13 @@
               <span class="red-dot">3</span>
           </div>
       </div>
+      <createmodal v-show="isModal" @close="closeModal"></createmodal>
   </div>
 </template>
 
 <script>
-import $ from 'jquery';
+import $ from 'jquery'
+import createModal from '../components/createModal'
 export default {
   name: 'sideBar',
   data () {
@@ -47,10 +49,14 @@ export default {
       slideDown: false,
       myClass: '高一(3)班...',
       showTxt: '展开',
+      isModal:false
     }
   },
+  components: {
+      createmodal: createModal
+  },
   created () {
-    
+
   },
   methods:{
     showMore () {
@@ -78,6 +84,9 @@ export default {
       this.type = 3;
       this.$router.push({path:'/myreceivelist'});
       sessionStorage.setItem('type',3);
+    },
+    closeModal (data) {
+      data == 'true' ? this.isModal=false : '';
     }
   }
 }
