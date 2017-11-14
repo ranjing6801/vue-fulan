@@ -1,11 +1,11 @@
 <template>
   <div class="create-paper">
       <pageheader></pageheader>
-      <navbar></navbar>
+      <navbar cur=1></navbar>
       <div class="content">
           <div class="cont-left">
               <div class="cont-left-t">
-                  <div class="cont-step">
+                  <div class="cont-step active">
                       <i>1</i>
                       <span>编辑试卷信息</span>
                   </div>
@@ -20,56 +20,56 @@
                       <h3>成绩单-2017-11-13</h3>
                   </div>
                   <div class="list">
-                      <span>考试时间:</span>
-                      <input type="text" />
+                      <span>考试时间 : </span>
+                      <input class="time" type="text" />
                   </div>
                   <div class="list">
-                      <span>考试学科:</span>
-                      <input name="subject" type="radio" />语文
-                      <input name="subject" type="radio" />其他
+                      <span>考试学科 : </span>
+                      <input name="subject" type="radio" /><i>语文</i>
+                      <input name="subject" type="radio" /><i>其他</i>
                   </div>
                   <div class="list">
-                      <span>考试类型:</span>
-                      <input name="type1" type="radio" />周演练
-                      <input name="type1" type="radio" />期中考试
-                      <input name="type1" type="radio" />期末考试
-                      <input name="type1" type="radio" />月考
-                      <input name="type1" type="radio" />单元测试
-                      <input name="type1" type="radio" />其他
+                      <span>考试类型 : </span>
+                      <input name="type1" type="radio" /><i>周演练</i>
+                      <input name="type1" type="radio" /><i>期中考试</i>
+                      <input name="type1" type="radio" /><i>期末考试</i>
+                      <input name="type1" type="radio" /><i>月考</i>
+                      <input name="type1" type="radio" /><i>单元测试</i>
+                      <input name="type1" type="radio" /><i>其他</i>
                   </div>
                   <div class="list">
-                      <span>考分类型</span>
-                      <input name="type2" type="radio" />等第制
-                      <input name="type2" type="radio" />分数制
+                      <span>考分类型 : </span>
+                      <input @click="isScore=false" name="type2" type="radio" /><i>等第制</i>
+                      <input @click="isScore=true" name="type2" type="radio" /><i>分数制</i>
                   </div>
-                  <div v-show="isScore">
+                  <div v-show="isScore" class="score">
                       <div>
-                        <span>总分</span>
-                        <input type="radio" />150
-                        <input type="radio" />120
-                        <input type="radio" />100
-                        <input type="radio" />自定义
+                        <span>总分 : </span>
+                        <input name="all" type="radio" /><i>150</i>
+                        <input name="all" type="radio" /><i>120</i>
+                        <input name="all" type="radio" /><i>100</i>
+                        <input name="all" type="radio" /><i>自定义</i>
                       </div>
                       <div>
-                        <span>合格分</span>
-                        <input type="radio" />90
-                        <input type="radio" />72
-                        <input type="radio" />60
-                        <input type="radio" />自定义
+                        <span>合格分 : </span>
+                        <input name="jige" type="radio" /><i>90</i>
+                        <input name="jige" type="radio" /><i>72</i>
+                        <input name="jige" type="radio" /><i>60</i>
+                        <input name="jige" type="radio" />自定义
                       </div>
                       <div>
-                        <span>优秀分</span>
-                        <input type="radio" />100
-                        <input type="radio" />80
-                        <input type="radio" />60
-                        <input type="radio" />自定义
+                        <span>优秀分 : </span>
+                        <input name="youxiu" type="radio" /><i>100</i>
+                        <input name="youxiu" type="radio" /><i>80</i>
+                        <input name="youxiu" type="radio" /><i>60</i>
+                        <input name="youxiu" type="radio" />自定义
                       </div>
                   </div>
               </div>
           </div>
           <div class="cont-right">
               <div class="cont-right-t">
-                  <button>下一步</button>
+                  <button @click="toPaper2">下一步</button>
                   <button>保存</button>
               </div>
               <div class="cont-right-b">
@@ -82,7 +82,9 @@
 
 <script>
 
-import $ from 'jquery';
+import $ from 'jquery'
+import pageHeader from '../components/pageHeader'
+import navBar from '../components/navBar'
 
 export default {
   name: 'createPaper',
@@ -92,7 +94,8 @@ export default {
     }
   },
   components: {
-
+      pageheader: pageHeader,
+      navbar: navBar,
   },
   beforeCreate () {
     if(!window.localStorage.getItem('islogged')){
@@ -103,7 +106,9 @@ export default {
 
   },
   methods:{
-
+    toPaper2 () {
+      this.$router.push({path:'/createPaper2'})
+    }
   }
 }
 </script>
@@ -112,6 +117,7 @@ export default {
 .content{
   width: 1200px;
   height: 500px;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
 }
@@ -119,6 +125,145 @@ export default {
   width: 880px;
 }
 .cont-left-t{
-
+  width: 880px;
+  height: 58px;
+  background: #fff;
+  border-radius: 5px;
+  border: 1px solid #e3e3e3;
+  justify-content: space-around;
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.cont-step{
+  width: 218px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  color: #c6c6c6;
+}
+.cont-step i{
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+  line-height: 32px;
+  border-radius: 50%;
+  text-align: center;
+  display: inline-block;
+  border: 1px solid transparent;
+  background: #c6c6c6;
+}
+.cont-step span{
+  color: #c6c6c6;
+  font-size: 18px;
+}
+.cont-left-t .active span{
+  color: #ff7e28;
+}
+.active i{
+  background: #ff7e28;
+}
+.cont-left-b{
+  width: 830px;
+  height: 420px;
+  padding-left: 50px;
+  border-radius: 5px;
+  background: #fff;
+  border: 1px solid #e3e3e3;
+  justify-content: space-around;
+}
+.title{
+  width: 782px;
+  height: 60px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid #d3d3d3;
+}
+.title h3{
+  font-size: 20px;
+  line-height: 60px;
+  color: #d3d3d3;
+}
+.list{
+  color: #535353;
+  margin-bottom: 18px;
+}
+.list span{
+  display: inline-block;
+  width: 88px;
+}
+.list input{
+  width: 14px;
+  height: 14px;
+  border: 1px solid #d3d3d3;
+}
+.list i{
+  margin: 0 20px 0 8px;
+}
+.list .time{
+  width: 132px;
+  height: 28px;
+  text-indent: 8px;
+  line-height: 28px;
+  border: 1px solid #d3d3d3;
+  border-radius: 5px;
+  background: url('/static/month.png') no-repeat right center;
+}
+.score{
+  width: 402px;
+  height: 122px;
+  padding: 20px 48px 0 26px;
+  background: #f6f6f6;
+  margin-left: 94px;
+  margin-top: 32px;
+}
+.score div{
+  color: #535353;
+  margin-bottom: 16px;
+}
+.score div i{
+  margin: 0 16px 0 8px;
+}
+.score div span{
+  width: 70px;
+  display: inline-block;
+}
+.score div input{
+  width: 14px;
+  height: 14px;
+  border: 1px solid #d3d3d3;
+}
+.cont-right{
+  width: 282px;
+}
+.cont-right-t{
+  width: 282px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  margin-bottom: 18px;
+}
+.cont-right-t button{
+  width: 128px;
+  height: 50px;
+  font-size: 20px;
+  border-radius: 5px;
+  border: 1px solid #ff7e28;
+  color: #ff7e28;
+  background: #fff;
+  cursor: pointer;
+}
+.cont-right-t button:hover{
+  font-weight: bold;
+}
+.cont-right-b button{
+  width: 280px;
+  height: 50px;
+  font-size: 20px;
+  border-radius: 5px;
+  border: 1px solid #d2d2d2;
+  color: #d2d2d2;
+  background: #fff;
+  cursor: pointer;
 }
 </style>

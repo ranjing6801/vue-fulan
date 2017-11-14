@@ -7,8 +7,8 @@
           </div>
           <div class="cont-mid">
               <div @click="warn"><img src="/static/info.png" /><p>通知</p></div>
-              <div class="mg"><img src="/static/work.png" /><p>成绩单</p></div>
-              <div @click="warn"><img src="/static/score.png" /><p>作业</p></div>
+              <div @click="warn" class="mg"><img src="/static/work.png" /><p>作业</p></div>
+              <div @click="toPaper"><img src="/static/score.png" /><p>成绩单</p></div>
           </div>
       </div>
   </div>
@@ -22,11 +22,11 @@ export default {
   name: 'createModal',
   data () {
     return {
-        
+
     }
   },
   components: {
-      
+
   },
   created () {
 
@@ -37,6 +37,9 @@ export default {
     },
     warn () {
        alert('功能开发中...');
+    },
+    toPaper () {
+      this.$router.push({path: '/createPaper'});
     }
   }
 }
