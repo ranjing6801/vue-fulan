@@ -4,6 +4,8 @@ import VueResource from 'vue-resource'
 import Home from '@/views/Home'
 import MyInfo from '@/views/MyInfo'
 import MyInfoList from '@/views/MyInfoList'
+import CreatePaper from '@/views/CreatePaper'
+import CreatePaper2 from '@/views/CreatePaper2'
 import MysendList from '@/views/MysendList'
 import MyReceiveList from '@/views/MyReceiveList'
 
@@ -20,7 +22,6 @@ export default new Router({
     },
     {
       path: '/myinfo',
-      name: 'myinfo',
       component: MyInfo,
       children:[
         {
@@ -39,6 +40,16 @@ export default new Router({
            component: MyReceiveList
         }
       ]
+    },
+    {
+      path: '/createPaper',
+      name: 'createpaper',
+      component: CreatePaper
+    },
+    {
+      path: '/createPaper2',
+      name: 'createpaper2',
+      component: CreatePaper2
     }
   ]
 })
