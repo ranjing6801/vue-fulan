@@ -12,6 +12,7 @@
             </transition>
         </div>
       </div>
+      <pagefooter></pagefooter>
   </div>
 </template>
 
@@ -19,9 +20,10 @@
 
 import $ from 'jquery';
 import pageHeader from '../components/pageHeader'
+import pageFooter from '../components/pageFooter'
+import createModal from '../components/createModal'
 import navBar from '../components/navBar'
 import sideBar from '../components/sideBar'
-import createModal from '../components/createModal'
 
 export default {
   name: 'Myinfo',
@@ -32,6 +34,7 @@ export default {
   },
   components: {
       pageheader: pageHeader,
+      pagefooter: pageFooter,
       navbar: navBar,
       sidebar: sideBar,
       createmodal: createModal
@@ -62,7 +65,7 @@ export default {
 <style scoped>
 .content{
   width: 1200px;
-  margin: 0 auto;
+  margin: 0 auto 88px;
   display: flex;
   justify-content: space-between;
 }

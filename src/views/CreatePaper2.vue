@@ -131,24 +131,6 @@
                           </tbody>
                       </table>
                   </div>
-                  <div class="score">
-                      <h3>成绩单设置</h3>
-                      <div class="set">
-                          <span>选择社群 : </span>
-                          <input type="checkbox" /><i>高一(1)班</i>
-                          <input type="checkbox" /><i>高一(2)班</i>
-                      </div>
-                      <div class="set">
-                          <span>可见范围 : </span>
-                          <input type="checkbox" /><i>家长</i>
-                          <input type="checkbox" /><i>学生</i>
-                      </div>
-                      <div class="set">
-                          <span>选择学科 : </span>
-                          <input type="checkbox" /><i>语文</i>
-                          <input type="checkbox" /><i>其他</i>
-                      </div>
-                  </div>
               </div>
           </div>
           <div class="cont-right">
@@ -161,6 +143,7 @@
               </div>
           </div>
       </div>
+      <pagefooter></pagefooter>
   </div>
 </template>
 
@@ -168,6 +151,7 @@
 
 import $ from 'jquery'
 import pageHeader from '../components/pageHeader'
+import pageFooter from '../components/pageFooter'
 import navBar from '../components/navBar'
 
 export default {
@@ -179,6 +163,7 @@ export default {
   },
   components: {
       pageheader: pageHeader,
+      pagefooter: pageFooter,
       navbar: navBar,
   },
   beforeCreate () {
@@ -204,8 +189,8 @@ export default {
 <style scoped>
 .content{
   width: 1200px;
-  height: 500px;
-  margin: 0 auto;
+  height: 800px;
+  margin: 0 auto 88px;
   display: flex;
   justify-content: space-between;
 }
@@ -395,33 +380,7 @@ export default {
   text-align: center;
   color: #111;
 }
-.score{
-}
-.score h3{
-  width: 800px;
-  height: 58px;
-  line-height: 58px;
-  border-top: 1px solid #c6c6c6;
-  color: #535353;
-  font-size: 18px;
-  font-weight: 500;
-}
-.score div{
-  color: #636363;
-  margin-bottom: 16px;
-}
-.score div i{
-  margin: 0 16px 0 8px;
-}
-.score div span{
-  width: 100px;
-  display: inline-block;
-}
-.score div input{
-  width: 14px;
-  height: 14px;
-  border: 1px solid #d3d3d3;
-}
+
 .cont-right{
   width: 282px;
 }
@@ -450,8 +409,8 @@ export default {
   height: 50px;
   font-size: 20px;
   border-radius: 5px;
-  border: 1px solid #d2d2d2;
-  color: #d2d2d2;
+  border: 1px solid #ff7e28;
+  color: #ff7e28;
   background: #fff;
   cursor: pointer;
 }
