@@ -20,6 +20,11 @@
                       <h3>成绩单-2017-11-13</h3>
                   </div>
                   <div class="list">
+                      <span>选择社群 : </span>
+                      <input name="class" type="radio" /><i>高一(1)班</i>
+                      <input name="class" type="radio" /><i>高一(2)班</i>
+                  </div>
+                  <div class="list">
                       <span>考试时间 : </span>
                       <input class="time" type="text" />
                   </div>
@@ -65,6 +70,20 @@
                         <input name="youxiu" type="radio" />自定义
                       </div>
                   </div>
+                  <div class="score1">
+                      <h3>成绩单设置</h3>
+
+                      <div class="set">
+                          <span>可见范围 : </span>
+                          <input type="checkbox" /><i>家长</i>
+                          <input type="checkbox" /><i>学生</i>
+                      </div>
+                      <div class="set">
+                          <span>选择学科 : </span>
+                          <input type="checkbox" /><i>语文</i>
+                          <input type="checkbox" /><i>其他</i>
+                      </div>
+                  </div>
               </div>
           </div>
           <div class="cont-right">
@@ -77,6 +96,7 @@
               </div>
           </div>
       </div>
+      <pagefooter></pagefooter>
   </div>
 </template>
 
@@ -84,6 +104,7 @@
 
 import $ from 'jquery'
 import pageHeader from '../components/pageHeader'
+import pageFooter from '../components/pageFooter'
 import navBar from '../components/navBar'
 
 export default {
@@ -94,16 +115,47 @@ export default {
     }
   },
   components: {
-      pageheader: pageHeader,
-      navbar: navBar,
+        pageheader: pageHeader,
+        pagefooter: pageFooter,
+        navbar: navBar,
   },
   beforeCreate () {
-    if(!window.localStorage.getItem('islogged')){
-      this.$router.push({path: '/'});
-    }
+        if(!window.localStorage.getItem('islogged')){
+          this.$router.push({path: '/'});
+        }
   },
   created () {
+    // this.$http.get('http://192.168.1.218/web/user/login.do',{params: {'name': 18866661001,'pwd':123456}})
+    //         .then( (res)=>{
+    //             console.log('res',res);
+    //         }, (err)=>{
+    //            console.log('err:',err);
+    //         } )
 
+    // $.ajax({
+    //       type:"get",
+    //       async:false,
+    //       data:{
+    //         name:'18866661001',
+    //         pwd:'123456'
+    //       },
+    //       url:"/web/user/login.do",
+    //       success:function(data){
+    //         console.log(data);
+    //       }
+    //     })
+
+    // $.ajax({
+    //     url: '/web/user/login.do',
+    //     type: 'get',
+    //     data: {
+    //         name:'18866661001',
+    //         pwd:'123456'
+    //     },
+    //     success:  function(data, textStatus, xhr){
+    //         console.log('data:',data);
+    //     }
+    // })
   },
   methods:{
     toPaper2 () {
@@ -116,8 +168,8 @@ export default {
 <style scoped>
 .content{
   width: 1200px;
-  height: 500px;
-  margin: 0 auto;
+  height: 800px;
+  margin: 0 auto 88px;
   display: flex;
   justify-content: space-between;
 }
@@ -166,8 +218,9 @@ export default {
 }
 .cont-left-b{
   width: 830px;
-  height: 420px;
+  min-height: 420px;
   padding-left: 50px;
+  padding-bottom: 24px;
   border-radius: 5px;
   background: #fff;
   border: 1px solid #e3e3e3;
@@ -216,6 +269,7 @@ export default {
   background: #f6f6f6;
   margin-left: 94px;
   margin-top: 32px;
+  margin-bottom: 20px;
 }
 .score div{
   color: #535353;
@@ -265,5 +319,33 @@ export default {
   color: #d2d2d2;
   background: #fff;
   cursor: pointer;
+}
+.score1{
+  margin-top: 24px;
+}
+.score1 h3{
+  width: 800px;
+  height: 58px;
+  line-height: 58px;
+  border-top: 1px solid #c6c6c6;
+  color: #535353;
+  font-size: 18px;
+  font-weight: 500;
+}
+.score1 div{
+  color: #636363;
+  margin-bottom: 16px;
+}
+.score1 div i{
+  margin: 0 16px 0 8px;
+}
+.score1 div span{
+  width: 100px;
+  display: inline-block;
+}
+.score1 div input{
+  width: 14px;
+  height: 14px;
+  border: 1px solid #d3d3d3;
 }
 </style>
