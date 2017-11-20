@@ -8,6 +8,8 @@ import CreatePaper from '@/views/CreatePaper'
 import CreatePaper2 from '@/views/CreatePaper2'
 import MysendList from '@/views/MysendList'
 import MyReceiveList from '@/views/MyReceiveList'
+import StudentManage from '@/views/StudentManage'
+import ManageDetail from '@/views/ManageDetail'
 
 Vue.use(Router)
 Vue.use(VueResource)
@@ -38,6 +40,16 @@ export default new Router({
            path: '/myreceivelist',
            name: 'myreceivelist',
            component: MyReceiveList
+        },
+        {
+           path: '/studentmanage',
+           name: 'studentmanage',
+           component: StudentManage
+        },
+        {
+           path: '/manageDetail',
+           name: 'managedetail',
+           component: ManageDetail
         }
       ]
     },

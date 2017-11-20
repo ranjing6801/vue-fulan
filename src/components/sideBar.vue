@@ -33,6 +33,12 @@
               <router-link to="/myreceivelist">我收到的</router-link>
               <span class="red-dot">3</span>
           </div>
+          <div class="stu"></div>
+          <div @click="toStuManage" class="nav04" :class="type=='4'?'nav-hot':'' ">
+              <img :src="type=='4'?'static/icon00.png':'static/icon0.png' " alt="" />
+              <router-link to="/studentmanage">学生管理</router-link>
+              <span class="red-dot">4</span>
+          </div>
       </div>
       <createmodal v-show="isModal" @close="closeModal"></createmodal>
   </div>
@@ -84,6 +90,11 @@ export default {
       this.type = 3;
       this.$router.push({path:'/myreceivelist'});
       sessionStorage.setItem('type',3);
+    },
+    toStuManage () {
+      this.type = 4;
+      this.$router.push({path:'/studentmanage'});
+      sessionStorage.setItem('type',4);
     },
     closeModal (data) {
       data == 'true' ? this.isModal=false : '';
@@ -227,6 +238,15 @@ export default {
 }
 .list-bar .nav-hot a{
   color: #ff831f;
+}
+.stu{
+  height: 10px !important;
+  width: 197px;
+  margin: 10px auto 0; 
+  border-top: 1px solid #DFDFDF;
+}
+.list-bar{
+  padding-bottom: 20px;
 }
 /* .nav01{
   background-image: url(../assets/icon7.png);
