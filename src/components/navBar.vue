@@ -1,7 +1,7 @@
 <template>
   <div class="nav-wrap">
       <div class="nav">
-          <div class="icon"><img src="../assets/icon.png" alt="home" /></div>
+          <div @click="toHome" class="icon"><img src="../assets/icon.png" alt="home" /></div>
           <div class="nav-item" :class="cur=='1'?'nav-cur':'' "><a>我的家校美</a></div>
       </div>
   </div>
@@ -21,7 +21,10 @@ export default {
     
   },
   methods:{
-    
+    toHome () {
+      sessionStorage.setItem('type',1);
+      this.$router.push({name:'home'});
+    }
   }
 }
 </script>
@@ -44,6 +47,7 @@ export default {
 .icon{
   width: 88px;
   height: 44px;
+  cursor: pointer;
 }
 .nav-item{
   width: 142px;
