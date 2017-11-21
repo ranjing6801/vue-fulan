@@ -433,12 +433,13 @@ export default {
   width: 14px;
   height: 14px;
   border: 1px solid #d3d3d3;
+  cursor: pointer;
 }
 .list i{
   margin: 0 20px 0 8px;
 }
 .list .time{
-  width: 132px;
+  width: 138px;
   text-indent: 8px;
   line-height: 28px;
   border-radius: 5px;

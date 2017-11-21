@@ -366,6 +366,8 @@ export default {
   cursor: pointer;
   text-indent: 114px;
   position: relative;
+  height: 30px;
+  line-height: 30px;
 }
 .up label{
   position: absolute;
