@@ -21,58 +21,94 @@
                   </div>
                   <div class="list">
                       <span>选择社群 : </span>
-                      <input name="class" type="radio" /><i>高一(1)班</i>
-                      <input name="class" type="radio" /><i>高一(2)班</i>
+                      <div>
+                        <p v-for="(item,index) in community" >
+                          <input
+                            :id="item.id"
+                            :groupId="item.groupId"
+                            name="class"
+                            type="radio"
+                            @click="chooseCommunity(item)"
+                          />
+                          <i>{{item.name}}</i>
+                        </p>
+                      </div>
+
                   </div>
                   <div class="list">
                       <span>考试时间 : </span>
-                      <input class="time" type="text" />
+                      <el-date-picker
+                        class="time"
+                        v-model="time"
+                        type="date"
+                        value-format="yyyy-MM-dd"
+                        @change="showTime"
+                        placeholder="选择日期">
+                      </el-date-picker>
+                      <!-- <input id="examTime" class="time" type="text" readonly /> -->
                   </div>
                   <div class="list">
                       <span>考试学科 : </span>
-                      <input name="subject" type="radio" /><i>语文</i>
-                      <input name="subject" type="radio" /><i>其他</i>
+                      <div>
+                          <p v-for="(item,index) in subject">
+                             <input
+                               :id="item.id"
+                               name="subject"
+                               type="radio"
+                               @click="chooseSubject(item)"
+                              />
+                             <i>{{item.name}}</i>
+                          </p>
+                      </div>
+
                   </div>
                   <div class="list">
                       <span>考试类型 : </span>
-                      <input name="type1" type="radio" /><i>周演练</i>
-                      <input name="type1" type="radio" /><i>期中考试</i>
-                      <input name="type1" type="radio" /><i>期末考试</i>
-                      <input name="type1" type="radio" /><i>月考</i>
-                      <input name="type1" type="radio" /><i>单元测试</i>
-                      <input name="type1" type="radio" /><i>其他</i>
+                      <div>
+                          <p v-for="(item,index) in examtype">
+                             <input
+                             :id="item.id"
+                             name="type1"
+                             type="radio"
+                             @click="savePaper1.examType=item.id"
+                             />
+                             <i>{{item.examTypeName}}</i>
+                          </p>
+                      </div>
                   </div>
                   <div class="list">
                       <span>考分类型 : </span>
-                      <input @click="isScore=false" name="type2" type="radio" /><i>等第制</i>
-                      <input @click="isScore=true" name="type2" type="radio" /><i>分数制</i>
+                      <input @click="isDD" name="type2" type="radio" /><i>等第制</i>
+                      <input @click="isFF" name="type2" type="radio" /><i>分数制</i>
                   </div>
                   <div v-show="isScore" class="score">
                       <div>
                         <span>总分 : </span>
-                        <input name="all" type="radio" /><i>150</i>
-                        <input name="all" type="radio" /><i>120</i>
-                        <input name="all" type="radio" /><i>100</i>
-                        <input name="all" type="radio" /><i>自定义</i>
+                        <input @click="setInp1(150)" name="all" type="radio" /><i>150</i>
+                        <input @click="setInp1(120)" name="all" type="radio" /><i>120</i>
+                        <input @click="setInp1(100)" name="all" type="radio" /><i>100</i>
+                        <input @click="setInp11" name="all" type="radio" /><i>自定义</i>
+                        <input v-model="savePaper1.maxScore" class="inp" v-show="inp1" onkeyup="value=value.replace(/[^\d]/g,'').substr(0,3)" type="text" />
                       </div>
                       <div>
                         <span>合格分 : </span>
-                        <input name="jige" type="radio" /><i>90</i>
-                        <input name="jige" type="radio" /><i>72</i>
-                        <input name="jige" type="radio" /><i>60</i>
-                        <input name="jige" type="radio" />自定义
+                        <input @click="setInp2(90)" name="jige" type="radio" /><i>90</i>
+                        <input @click="setInp2(72)" name="jige" type="radio" /><i>72</i>
+                        <input @click="setInp2(60)" name="jige" type="radio" /><i>60</i>
+                        <input @click="setInp22" name="jige" type="radio" /><i>自定义</i>
+                        <input v-model="savePaper1.qualifyScore" class="inp" v-show="inp2" onkeyup="value=value.replace(/[^\d]/g,'').substr(0,3)" type="text" />
                       </div>
                       <div>
                         <span>优秀分 : </span>
-                        <input name="youxiu" type="radio" /><i>100</i>
-                        <input name="youxiu" type="radio" /><i>80</i>
-                        <input name="youxiu" type="radio" /><i>60</i>
-                        <input name="youxiu" type="radio" />自定义
+                        <input @click="setInp3(100)" name="youxiu" type="radio" /><i>100</i>
+                        <input @click="setInp3(80)" name="youxiu" type="radio" /><i>80</i>
+                        <input @click="setInp3(60)" name="youxiu" type="radio" /><i>60</i>
+                        <input @click="setInp33" name="youxiu" type="radio" /><i>自定义</i>
+                        <input v-model="savePaper1.excellentScore" class="inp" v-show="inp3" onkeyup="value=value.replace(/[^\d]/g,'').substr(0,3)" type="text" />
                       </div>
                   </div>
                   <div class="score1">
                       <h3>成绩单设置</h3>
-
                       <div class="set">
                           <span>可见范围 : </span>
                           <input type="checkbox" /><i>家长</i>
@@ -89,10 +125,10 @@
           <div class="cont-right">
               <div class="cont-right-t">
                   <button @click="toPaper2">下一步</button>
-                  <button>保存</button>
+                  <button @click="save">保存</button>
               </div>
               <div class="cont-right-b">
-                  <button>发布</button>
+                  <button disabled="disabled">发布</button>
               </div>
           </div>
       </div>
@@ -111,7 +147,28 @@ export default {
   name: 'createPaper',
   data () {
     return {
-        isScore: false
+        inp1: false,
+        inp2: false,
+        inp3: false,
+        isScore: false,
+        choose:'',
+        time:'',
+        community:[{name:'',id:'',groupId:''}],
+        subject:[{name:'',id:''}],
+        examtype:[{examTypeName:'',id:''}],
+        savePaper1:{
+          "communityId": "",
+          "examName": "",
+          "examStrTime": "",
+          "examType": "",
+          "excellentScore": 0,
+          "groupId": "",
+          "id": "",
+          "maxScore": 0,
+          "qualifyScore": 0,
+          "recordScoreType": 0,
+          "subjectId": ""
+        }
     }
   },
   components: {
@@ -119,53 +176,172 @@ export default {
         pagefooter: pageFooter,
         navbar: navBar,
   },
+  mounted () {
+
+  },
   beforeCreate () {
-        if(!window.localStorage.getItem('islogged')){
-          this.$router.push({path: '/'});
+    if(!window.localStorage.getItem('islogged')){
+      this.$router.push({path: '/'});
+    }
+
+    var _this = this;
+    //获取社群列表
+    $.ajax({
+        url: '/web/community/myRoleCommunitys.do',
+        type: 'get',
+        data: {
+
+        },
+        success:  function(res){
+            console.log('myRoleCommunitys:',res);
+            _this.community = res.message;
         }
+    })
+    //获取学科
+    $.ajax({
+        url: '/web/appOperation/selectTeacherSubjectList.do',
+        type: 'get',
+        data: {
+
+        },
+        success:  function(res){
+            console.log('SubjectList:',JSON.parse(res));
+            _this.subject = JSON.parse(res).message;
+        }
+    })
+    //获取考试类型
+    $.ajax({
+        url: '/web/reportCard/getExamTypeList.do',
+        type: 'get',
+        data: {
+
+        },
+        success:  function(res){
+            console.log('getExamTypeList:',res);
+            _this.examtype = res.message;
+        }
+    })
   },
   created () {
-    // this.$http.get('http://192.168.1.218/web/user/login.do',{params: {'name': 18866661001,'pwd':123456}})
-    //         .then( (res)=>{
-    //             console.log('res',res);
-    //         }, (err)=>{
-    //            console.log('err:',err);
-    //         } )
 
-    // $.ajax({
-    //       type:"get",
-    //       async:false,
-    //       data:{
-    //         name:'18866661001',
-    //         pwd:'123456'
-    //       },
-    //       url:"/web/user/login.do",
-    //       success:function(data){
-    //         console.log(data);
-    //       }
-    //     })
-
-    // $.ajax({
-    //     url: '/web/user/login.do',
-    //     type: 'get',
-    //     data: {
-    //         name:'18866661001',
-    //         pwd:'123456'
-    //     },
-    //     success:  function(data, textStatus, xhr){
-    //         console.log('data:',data);
-    //     }
-    // })
   },
   methods:{
+    showTime () {
+      console.log('time:',this.time);
+    },
+    chooseCommunity (data) {
+      this.community.name = data.name;
+      this.savePaper1.communityId = data.id;
+      this.savePaper1.groupId = data.groupId;
+    },
+    chooseSubject (data) {
+      this.subject.name = data.name;
+      this.savePaper1.examName = data.examTypeName;
+      this.savePaper1.id = data.id;
+    },
     toPaper2 () {
-      this.$router.push({path:'/createPaper2'})
+
+      var _this = this;
+
+      if( this.savePaper1.communityId=='' || this.savePaper1.examName=='' || this.savePaper1.examType=='' || this.choose==''){
+        //alert('请完善试卷信息!')
+        layer.open({content: '请完善试卷信息!',btn: '确定'});
+      }
+      else{
+        if(this.choose==1){
+            if(!this.savePaper1.excellentScore||!this.savePaper1.maxScore||!this.savePaper1.qualifyScore){
+            // alert('请选择完整的分数!');
+            layer.open({content: '请选择完整的分数！',btn: '确定'});
+            return;
+          }
+        }
+
+
+        var data = {
+              "communityId": this.savePaper1.communityId,
+              "examName": this.community.name+this.subject.name,
+              "examStrTime": this.time,
+              "examType": this.savePaper1.examType,
+              "excellentScore": this.savePaper1.excellentScore || -1,
+              "groupId": this.savePaper1.groupId,
+              "id": '',
+              "maxScore": this.savePaper1.maxScore || -1,
+              "qualifyScore": this.savePaper1.qualifyScore || -1,
+              "recordScoreType": this.choose,
+              "subjectId": this.savePaper1.id
+          };
+        var param = JSON.stringify(data);
+
+        console.log('data:',data);
+
+        $.ajax({
+          url: '/web/reportCard/saveGroupExamDetail.do',
+          type: 'post',
+          data: param,
+          async: false,
+          dataType: "json",
+          contentType: "application/json",
+          success:  function(res){
+              console.log('saveGroupExamDetail:',res);
+              sessionStorage.setItem('examId',res.message);
+              _this.$router.push({path:'/createPaper2'});
+          }
+        })
+      }
+    },
+    save () {
+      layer.open({
+        type: 2,
+        content: '正在保存...',
+        time:1,
+        success: function(){
+            setTimeout(function(){
+                    layer.open({
+                        content: '保存失败！'
+                        ,btn: '确定'
+                      });
+                },1000);
+            }
+      });
+      console.log('savePaper1:',this.savePaper1);
+    },
+    isDD () {
+      this.choose = 2;
+      this.isScore = false;
+      sessionStorage.setItem('isDD','true');
+    },
+    isFF () {
+      this.choose = 1;
+      this.isScore = true;
+      sessionStorage.removeItem('isDD');
+    },
+    setInp1 (n) {
+      this.inp1 = false;
+      this.savePaper1.maxScore = n;
+    },
+    setInp11 () {
+      this.inp1 = true;
+    },
+    setInp2 (n) {
+      this.inp2 = false;
+      this.savePaper1.qualifyScore = n;
+    },
+    setInp22 () {
+      this.inp2 = true;
+    },
+    setInp3 (n) {
+      this.inp3 = false;
+      this.savePaper1.excellentScore = n;
+    },
+    setInp33 () {
+      this.inp3 = true;
     }
   }
 }
 </script>
 
 <style scoped>
+@import '../assets/libs/jedate.css';
 .content{
   width: 1200px;
   height: 800px;
@@ -238,8 +414,16 @@ export default {
   color: #d3d3d3;
 }
 .list{
+  display: flex;
   color: #535353;
   margin-bottom: 18px;
+}
+.list div{
+  width: 620px;
+}
+.list div p{
+  margin-bottom: 4px;
+  display: inline-block;
 }
 .list span{
   display: inline-block;
@@ -255,15 +439,12 @@ export default {
 }
 .list .time{
   width: 132px;
-  height: 28px;
   text-indent: 8px;
   line-height: 28px;
-  border: 1px solid #d3d3d3;
   border-radius: 5px;
-  background: url('/static/month.png') no-repeat right center;
 }
 .score{
-  width: 402px;
+  width: 500px;
   height: 122px;
   padding: 20px 48px 0 26px;
   background: #f6f6f6;
@@ -286,6 +467,12 @@ export default {
   width: 14px;
   height: 14px;
   border: 1px solid #d3d3d3;
+}
+.score div .inp{
+  width: 74px;
+  height: 24px;
+  text-align: center;
+  color: #111;
 }
 .cont-right{
   width: 282px;

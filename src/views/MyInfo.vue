@@ -29,7 +29,7 @@ export default {
   name: 'Myinfo',
   data () {
     return {
-
+        
     }
   },
   components: {
@@ -57,7 +57,7 @@ export default {
     // })
   },
   methods:{
-
+    
   }
 }
 </script>

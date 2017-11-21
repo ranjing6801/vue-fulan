@@ -242,7 +242,7 @@ export default {
 .stu{
   height: 10px !important;
   width: 197px;
-  margin: 10px auto 0; 
+  margin: 10px auto 0;
   border-top: 1px solid #DFDFDF;
 }
 .list-bar{

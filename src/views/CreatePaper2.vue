@@ -24,20 +24,31 @@
                       <div class="list">
                           <i class="after">1</i>
                           <span class="span1">第一步：下载成绩录入模板</span>
-                          <a class="down">2017-11-11 语文成绩录入模板</a>
+                          <a :href="downloadUrl" class="down">成绩录入模板</a>
                       </div>
                       <div class="list">
-                          <i class="after">2</i>
-                          <span  class="span1">第二步：上传已经录入成绩的模板</span>
-                          <div>
+                          <i class="after2">2</i>
+                          <span class="span1">第二步：上传已经录入成绩的模板</span>
+                          <el-upload
+                            class="upload-demo"
+                            action="https://jsonplaceholder.typicode.com/posts/"
+                            :limit="1"
+                            :on-exceed="handleExceed"
+                            :before-upload="beforeFileUpload"
+                            :onSuccess="uploadSuccess"
+                            >
+                            <el-button size="small" type="primary">点击上传</el-button>
+                            <div slot="tip" class="el-upload__tip">(只能上传xsl/xslx文件)</div>
+                          </el-upload>
+                          <!-- <div>
                               <a class="up">
                               点击上传
                               <label for="file" >
-                                  <input @change="fileChange" type="file" name="file" id="file" />
+                                  <input @change="fileChange" type="file" name="file" id="file" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
                               </label>
                               </a>
-                          </div>
-
+                          </div> -->
+                          
                       </div>
                       <div class="list">
                           <i>3</i>
@@ -52,81 +63,27 @@
                                 <th>序号</th>
                                 <th>姓名</th>
                                 <th>学号</th>
-                                <th>分数</th>
+                                <th>{{ !isDD?'分数':'等第' }}</th>
                               </tr>
                           </thead>
                           <tbody>
-                              <tr>
-                                <td>01</td>
-                                <td>张飞飞</td>
-                                <td>2012213865</td>
-                                <td><input onkeyup="value=value.replace(/[^\d]/g,'').substr(0,3)" type="text" /></td>
-                              </tr>
-                              <tr>
-                                <td>02</td>
-                                <td>胡歌</td>
-                                <td>2012213868</td>
-                                <td><input onkeyup="value=value.replace(/[^\d]/g,'').substr(0,3)" type="text" /></td>
-                              </tr>
-                              <tr>
-                                <td>03</td>
-                                <td>张三</td>
-                                <td>2012213965</td>
-                                <td><input onkeyup="value=value.replace(/[^\d]/g,'').substr(0,3)" type="text" /></td>
-                              </tr>
-                              <tr>
-                                <td>04</td>
-                                <td>李四</td>
-                                <td>2012213765</td>
-                                <td><input onkeyup="value=value.replace(/[^\d]/g,'').substr(0,3)" type="text" /></td>
-                              </tr>
-                              <tr>
-                                <td>01</td>
-                                <td>张飞飞</td>
-                                <td>2012213865</td>
-                                <td><input onkeyup="value=value.replace(/[^\d]/g,'').substr(0,3)" type="text" /></td>
-                              </tr>
-                              <tr>
-                                <td>02</td>
-                                <td>胡歌</td>
-                                <td>2012213868</td>
-                                <td><input onkeyup="value=value.replace(/[^\d]/g,'').substr(0,3)" type="text" /></td>
-                              </tr>
-                              <tr>
-                                <td>03</td>
-                                <td>张三</td>
-                                <td>2012213965</td>
-                                <td><input onkeyup="value=value.replace(/[^\d]/g,'').substr(0,3)" type="text" /></td>
-                              </tr>
-                              <tr>
-                                <td>04</td>
-                                <td>李四</td>
-                                <td>2012213765</td>
-                                <td><input onkeyup="value=value.replace(/[^\d]/g,'').substr(0,3)" type="text" /></td>
-                              </tr>
-                              <tr>
-                                <td>01</td>
-                                <td>张飞飞</td>
-                                <td>2012213865</td>
-                                <td><input onkeyup="value=value.replace(/[^\d]/g,'').substr(0,3)" type="text" /></td>
-                              </tr>
-                              <tr>
-                                <td>02</td>
-                                <td>胡歌</td>
-                                <td>2012213868</td>
-                                <td><input onkeyup="value=value.replace(/[^\d]/g,'').substr(0,3)" type="text" /></td>
-                              </tr>
-                              <tr>
-                                <td>03</td>
-                                <td>张三</td>
-                                <td>2012213965</td>
-                                <td><input onkeyup="value=value.replace(/[^\d]/g,'').substr(0,3)" type="text" /></td>
-                              </tr>
-                              <tr>
-                                <td>04</td>
-                                <td>李四</td>
-                                <td>2012213765</td>
-                                <td><input onkeyup="value=value.replace(/[^\d]/g,'').substr(0,3)" type="text" /></td>
+                              <tr v-for="(list,index) in studentsList">
+                                <td>{{index+1}}</td>
+                                <td>{{list.userName}}</td>
+                                <td>{{list.userNumber}}</td>
+                                <td v-show="!isDD"><input onkeyup="value=value.replace(/[^\d]/g,'').substr(0,3)" type="text" /></td>
+                                <td v-show="isDD">
+                                  <div>
+                                    <span @click="cura($event)" :class="index+'a'">A+</span>
+                                    <span @click="cura($event)" :class="index+'a'">B+</span>
+                                    <span @click="cura($event)" :class="index+'a'">C+</span>
+                                    <span @click="cura($event)" :class="index+'a'">D+</span>
+                                    <span @click="cura($event)" :class="index+'a'">A</span>
+                                    <span @click="cura($event)" :class="index+'a'">B</span>
+                                    <span @click="cura($event)" :class="index+'a'">C</span>
+                                    <span @click="cura($event)" :class="index+'a'">D</span>
+                                  </div>
+                                </td>
                               </tr>
                           </tbody>
                       </table>
@@ -139,7 +96,7 @@
                   <button>保存</button>
               </div>
               <div class="cont-right-b">
-                  <button>发布</button>
+                  <button @click="onSubmit">发布</button>
               </div>
           </div>
       </div>
@@ -158,7 +115,12 @@ export default {
   name: 'createPaper2',
   data () {
     return {
-        isModel: true
+        isModel: true,
+        isDD: false,
+        cur:[],
+        downloadUrl: '',
+        version:'',
+        studentsList:[],
     }
   },
   components: {
@@ -172,15 +134,140 @@ export default {
     }
   },
   created () {
+    if(!window.sessionStorage.getItem('isDD')){
+      this.isDD = false;
+    }else{
+      this.isDD = true;
+    }
 
+    var id = sessionStorage.getItem('examId') || '';
+
+    this.downloadUrl = '/web/reportCard/exportTemplate/'+id || '';
+
+    var _this = this;
+    //获取成绩单表格
+    $.ajax({
+        url: '/web/reportCard/searchRecordStudentScores.do?examGroupDetailId='+id,
+        type: 'get',
+        data: { 
+            
+        },
+        success:  function(res){
+            console.log('StudentScores:',res);
+            _this.studentsList = res.message;
+        }
+    });
+
+    //获取该考次的版本
+    $.ajax({
+            url: '/web/reportCard/getExamGroupVersion.do?examGroupDetailId='+id,
+            type: 'get',
+            data: { 
+                
+            },
+            success:  function(res){
+                console.log('版本号:',res);
+                _this.version = res.message.version;
+            }
+        });
   },
   methods:{
+    beforeFileUpload (file) {
+        //const isXSL = file.type === 'image/jpeg';
+        //const isXSLX = file.type === 'image/jpeg';
+        const isXSL = file.name.split('.')[1] === 'xls' || file.name.split('.')[1] === 'xlsx';
+        //const isXSLX = file.name.split('.')[1] === 'xlsx';
+        //const extension3 = file.name.split('.')[1] === 'doc'
+        //const extension4 = file.name.split('.')[1] === 'docx'
+        // if (!isXSL && !isXSLX ) {
+        //   console.log('上传模板只能是 xls、xlsx格式!');
+        //   this.$message.error('上传模板只能是 xls、xlsx格式!');
+        // }
+
+        //const isSize = file.size / 1024 / 1024 < 2;
+
+        //console.log('file.type:',file);
+
+        if (!isXSL) {
+          this.$message.error('上传模板只能是 xls、xlsx格式!');
+        }
+        return isXSL;
+    },
+    uploadSuccess (response, file, fileList) {
+      console.log('上传文件成功:', file);
+    },
+    handleExceed () {
+          this.$message.warning('您只能上传一个文件!');
+    },
+    cura (e) {
+      var el = e.currentTarget;
+      $(el).addClass('active').siblings().removeClass('active');
+
+      //this.cur[i] = list.id+a;
+      //this.$set(this.cur,i,{uid:list.id+a});
+      //console.log('this.cur:',this.cur);
+      //this.$set(this.cur, 'uid', 27)
+    },
     toPaper1 () {
       this.$router.push({path:'/createPaper'})
     },
     fileChange (e) {
-      alert('上传成功！');
       console.log('上传的文件:',e.target.files);
+
+      if( e.target.files.length>0 ){
+
+            $.ajax({
+            url: '/web/reportCard/importTemplate.do',
+            type: 'get',
+            success:  function(res){
+                console.log('importTemplate:',res);
+                
+            }
+          })
+
+      }
+    },
+    onSubmit () {
+
+      var id = sessionStorage.getItem('examId') || '';
+      var ver = this.version;
+      var arr = [];
+
+      for( var i=0;i<this.studentsList.length;i++ ){
+          arr.push({
+            "groupExamDetailId": id,
+              "id": this.studentsList[i].id,
+              "rank": 0,
+              "score": this.studentsList[i].score,
+              "scoreLevel": this.studentsList[i].scoreLevel
+          })
+      }
+
+      console.log('arr:',arr);
+
+      var data = {
+          "examGroupUserScoreDTOs": arr,
+          "groupExamDetailId":id,
+          "status": 2,
+          "version": parseInt(ver)+1
+      };
+
+      var param = JSON.stringify(data); 
+
+      console.log('发布的data:',data)
+
+      // $.ajax({
+      //       url: '/web/reportCard/saveRecordExamScore',
+      //       type: 'post',
+      //       data: param,
+      //       async: false,
+      //       dataType: "json",
+      //       contentType: "application/json",
+      //       success:  function(res){
+      //           console.log('saveRecordExamScore:',res);
+                
+      //       }
+      //   });
     }
   }
 }
@@ -267,7 +354,7 @@ export default {
   margin-bottom: 28px;
 }
 .list span{
-
+  
 }
 .list .span1{
   display: inline-block;
@@ -311,6 +398,15 @@ export default {
   background: url('/static/yu.png') no-repeat 68px center;
   background-size: 26px 30px;
 }
+.upload-demo{
+  width: 468px;
+  margin-left: 68px;
+}
+.el-button--small{}
+.el-button--small:hover{
+  background-color: #ff6c0a;
+  border-color: #ff6c0a;
+}
 .list input{
   width: 14px;
   height: 14px;
@@ -329,7 +425,7 @@ export default {
   display: inline-block;
   position: relative;
 }
-.after::after{
+/*.after::after{
   content: '';
   position: absolute;
   width: 1px;
@@ -338,6 +434,15 @@ export default {
   top: 36px;
   background: #c6c6c6;
 }
+.after2::after{
+  content: '';
+  position: absolute;
+  width: 1px;
+  height: 134px;
+  left: 18px;
+  top: 36px;
+  background: #c6c6c6;
+}*/
 .list .time{
   width: 132px;
   height: 28px;
@@ -373,6 +478,22 @@ export default {
   font-size: 13px;
   text-align: center;
   border-bottom: 1px solid #eaeaea;
+}
+td div{
+  width: 100%;
+}
+td div span{
+  display: inline-block;
+  width: 30px;
+  color: #333;
+  cursor: pointer;
+  margin-bottom: 4px;
+  margin-right: 4px;
+  border: 1px solid #c6c6c6;
+}
+td div .active{
+  color: #ff7e28;
+  border: 1px solid #ff7e28;
 }
 .tab input{
   width: 74px;

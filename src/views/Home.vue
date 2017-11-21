@@ -37,6 +37,7 @@
                 </div>
             </div>
         </div>
+        
     </div>
     
 </template>
@@ -228,4 +229,5 @@ export default {
 .icons img{
     margin-right: 8px;
 }
+
 </style>
