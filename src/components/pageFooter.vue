@@ -57,6 +57,7 @@ export default {
 }
 .left{
     width: 500px;
+    margin-left: 52px;
 }
 .left p{
     font-size: 14px;
@@ -100,8 +101,13 @@ export default {
 .div1{
     margin-right: 30px;
 }
+.div2{
+    padding-top: 8px;
+}
 .div2 img{
-  margin-bottom: 8px;
+    width: 118px;
+    height: 118px;
+    margin-bottom: 8px;
 }
 .font14{
   font-size: 14px;
