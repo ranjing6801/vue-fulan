@@ -39,9 +39,18 @@
             <i class="active">全部</i>
             <i>今天</i>
             <i>最近一周内</i>
-            <input type="text">
+            <el-date-picker
+              @change="showTime"
+              v-model="selectTime"
+              :clearable="false"
+              type="daterange"
+              range-separator="到"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期">
+            </el-date-picker>
+            <!-- <input type="text">
             <em>到</em>
-            <input type="text">
+            <input type="text"> -->
             <button>确定</button>
           </div>
         </li>
@@ -132,20 +141,24 @@ export default {
   name: 'myrecevielist',
   data () {
     return {
-        
+        selectTime: ''
     }
   },
   components: {
-      
+
   },
   beforeCreate () {
-    
+    if(!window.localStorage.getItem('islogged')){
+      this.$router.push({path: '/'});
+    }
   },
   created () {
-    
+
   },
   methods:{
-    
+    showTime () {
+      console.log('selectTime:',this.selectTime);
+    }
   }
 }
 </script>
@@ -154,6 +167,15 @@ export default {
 button{cursor: pointer;}
 .clearfix:after {content: "."; display: block; height:0; clear:both; visibility: hidden;}
 .clearfix { *zoom:1; }
+.el-date-editor--daterange{
+  width: 260px;
+  position: relative;
+}
+.el-range__close-icon{
+  position: absolute;
+  right: 0;
+  top: 0;
+}
 .top{
   padding: 20px 20px 20px 30px;
   border: 1px solid #DFDFDF;
@@ -201,8 +223,7 @@ button{cursor: pointer;}
   width: 60px;
 }
 .ul-type li div{
-  float: left;
-  width: 805px;
+
 }
 .ul-type li div i.active{
   color: #FF7E28;
@@ -395,3 +416,4 @@ button{cursor: pointer;}
   float: left;
 }
 </style>
+
