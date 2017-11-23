@@ -1,8 +1,9 @@
 <template>
     <div class="ebody" :style="{backgroundImage:'url(' +bgUrl + ')'}">
         <div class="p1-wrap">
+
             <div class="p1-top">
-                <div class="title"><img src="/static/txt.png" alt="WWW.JIAXIAOMEI.COM" /></div>
+                <div @click="showLogin=true" class="title"><img src="/static/txt.png" alt="WWW.JIAXIAOMEI.COM" /></div>
                 <div class="mid"><img src="../assets/jxm.png" alt="jxm" /></div>
                 <div class="bot">
                     <div class="bot-l">
@@ -14,9 +15,11 @@
                     </div>
                 </div>
             </div>
+
             <div class="part">
                 <img src="/static/part2.png" alt="" />
             </div>
+
             <div class="p1-bottom">
                 <div class="foot-l">
                     <div class="foot-t">
@@ -41,6 +44,19 @@
                     </div>
                 </div>
             </div>
+
+            <div v-show="showLogin" class="login-box">
+                <div class="login-top"><span @click="showLogin=false">< 返回APP下载</span></div>
+                <div class="login-content">
+                    <div class="inp"><input v-model="user.name" type="text" placeholder="手机号或邮箱" /></div>
+                    <div class="inp"><input v-model="user.psw" type="password" placeholder="密码" /></div>
+                    <div class="login-bot">
+                        <a href="#">无法登录？</a>
+                        <button @click="myLogin"></button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </template>
@@ -53,7 +69,9 @@ export default {
   name: 'home',
   data () {
     return {
-      bgUrl:'/static/page.jpg'
+      bgUrl:'/static/page.jpg',
+      showLogin:false,
+      user: {name:'',psw:''}
     }
   },
   components: {
@@ -133,6 +151,17 @@ export default {
                 this.$router.push({path: '/myinfo'});
             }
 
+        },
+        myLogin () {
+            if( this.user.name.trim()=='' ){
+                  layer.open({content: '请输入手机号或邮箱！',btn: '确定'});
+                  return
+              }else if( this.user.psw.trim()=='' ){
+                  layer.open({content: '请输入密码！',btn: '确定'});
+                  return;
+              }else{
+                  layer.open({content: '没接口还是登不了！',btn: '确定'});
+              }
         }
     }
 }
@@ -149,6 +178,7 @@ export default {
 .p1-wrap{
     width: 1100px;
     margin: 0 auto;
+    position: relative;
 }
 .p1-top{
     margin-bottom: 312px;
@@ -272,5 +302,61 @@ export default {
 .icons img{
     margin-right: 8px;
 }
-
+.login-box{
+    width: 500px;
+    height: 320px;
+    position: absolute;
+    left: -38px;
+    top: 360px;
+    z-index: 2;
+    background: #fff;
+}
+.login-top{
+    font-size: 14px;
+    color: #fc6615;
+    margin-bottom: 12px;
+}
+.login-top span{
+    cursor: pointer;
+}
+.login-content{
+    width: 310px;
+    height: 220px;
+    padding: 28px 46px;
+    border: 1px solid #fc6615;
+    border-radius: 20px;
+}
+.inp{
+    margin-bottom: 14px;
+}
+.inp input{
+    width: 310px;
+    height: 40px;
+    line-height: 40px;
+    text-indent: 10px;
+    font-size: 16px;
+    color: #333;
+    border: 1px solid transparent;
+    border-bottom: 1px solid #ffc7a9;
+}
+.login-bot{
+    width: 312px;
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+}
+.login-bot a{
+    color: #898989;
+    font-size: 15px;
+    margin-bottom: 8px;
+    align-self: flex-end;
+}
+.login-bot button{
+    border: none;
+    outline: none;
+    cursor: pointer;
+    width: 165px;
+    height: 64px;
+    background: url(/static/login.png) no-repeat center;
+}
 </style>
