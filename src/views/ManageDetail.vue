@@ -2,90 +2,171 @@
   <div class="manage-cont">
     <div class="mdcont">
       <router-link to='/studentManage' class='back'> <返回</router-link>
-      <div class="tit">上海天山小学第一届奥林匹克运动会</div>
+      <div class="tit">{{title}}</div>
       <table>
         <tr>
-          <th width="15%">序号</th>
-          <th width="45%">学生名单</th>
-          <th width="20%">所属社群</th>
-          <th width="20%">操作</th>
+          <th width="33%">姓名</th>
+          <th width="33%">学号</th>
+          <th width="33%">操作</th>
         </tr>
-        <tr>
-          <td>1</td>
-          <td>上海天山小学2017届一（1）班学生名单</td>
-          <td>
-              <select>
-                <option>请选择</option>
-              </select>
-          </td>
-          <td><button @click="isWind=true">编辑</button>|<button @click='cue'>删除</button></td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>上海天山小学2017届一（1）班学生名单</td>
-          <td>
-              <select>
-                <option>请选择</option>
-              </select>
-          </td>
-          <td><button>编辑</button>|<button @click='cue'>删除</button></td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>上海天山小学2017届一（1）班学生名单</td>
-          <td>
-              <select>
-                <option>请选择</option>
-              </select>
-          </td>
-          <td><button>编辑</button>|<button @click='cue'>删除</button></td>
+        <tr v-for="(stu,index) in students">
+          <td>{{stu.name}}</td>
+          <td>{{stu.num}}</td>
+          <td><button @click="edit(stu,index)">编辑</button>|<button @click="del(stu,index)">删除</button></td>
         </tr>
       </table>
     </div>
-    <managewind v-show="isWind" @close="closeWind"></managewind>
-
+    <div v-show="isEdit" class="bg"></div>
+    <div v-show="isEdit" class="edit-wrap">
+      <div class="edit-box">
+          <div class="edit-content">
+            <div class="edit-inner">
+              <div><span>姓名 : </span><input v-model="temp.name" type="text" /></div>
+              <div><span>学号 : </span><input v-model="temp.num" type="text" /></div>
+            </div>
+            <div class="btns">
+              <span @click="cancel">取消</span>
+              <span class="confirm" @click="confirm">确认</span>
+            </div>
+          </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 
 import $ from 'jquery';
-import manageWind from '../components/manageWind'
 
 export default {
   name: 'managedetail',
   data () {
     return {
-        isWind: false
+        isEdit: false,
+        title: this.$route.params.title,
+        students: [
+          {name:'张三',num:'2012213865'},
+          {name:'李四',num:'2016793897'},
+          {name:'赵武',num:'2016793897'},
+          {name:'力学',num:'2016793897'},
+          {name:'以为',num:'2016793897'},
+          {name:'加班',num:'2016793897'},
+          {name:'吉他',num:'2016793897'},
+          {name:'琵琶',num:'2016793897'},
+          {name:'可以',num:'2016793897'},
+          {name:'不想',num:'2016793897'},
+          {name:'好的',num:'2016793897'},
+          {name:'什么',num:'2016793897'}
+        ],
+        temp: {
+          name:'',
+          num:''
+        }
     }
   },
   components: {
-      managewind: manageWind
   },
   beforeCreate () {
-    
+
   },
   created () {
-    
+
   },
   methods:{
-    cue(){
-      var del = confirm('删除名单，名单内包含的学生信息也会被删除，是否继续？')
-      if(del == true){
+    del (s,i) {
+      var _this = this;
 
-      }
+      layer.open({
+        content: `确定要删除"${s.name}"学生信息吗?`,
+        btn: ['确定', '取消'],
+        yes: function(index){
+          layer.close(index);
+          _this.students.splice(i,1);
+        },
+        no: function(index){
+          layer.close(index);
+        }
+      });
     },
-    closeWind (data) {
-      data == 'true' ? this.isWind=false : '';
+    edit (s,i){
+      this.isEdit = true;
+      this.temp.name = s.name;
+      this.temp.num = s.num;
+    },
+    confirm () {
+      this.isEdit = false;
+      this.students.push(this.temp);
+    },
+    cancel () {
+      this.isEdit = false;
     }
   }
 }
 </script>
 
 <style scoped>
-button{cursor: pointer;}
-.clearfix:after {content: "."; display: block; height:0; clear:both; visibility: hidden;}
-.clearfix { *zoom:1; }
+.bg{
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.7);
+}
+.edit-wrap{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  display: table;
+}
+.edit-box{
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+.edit-content{
+  display: inline-block;
+  width: 450px;
+  font-size: 18px;
+  border-radius: 5px;
+  background-color: #fff;
+  border: 1px solid transparent;
+}
+.edit-inner{
+  padding: 50px 30px;
+  text-align: center;
+}
+.edit-inner div{
+  margin-bottom: 14px;
+}
+.edit-inner input{
+  height:32px;
+  width:160px;
+  font-size:16px;
+  text-indent:8px;
+}
+.btns{
+  display: flex;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  border-top: 1px solid #D0D0D0;
+  background-color: #F2F2F2;
+}
+.btns span{
+  flex: 1;
+  font-size: 18px;
+  cursor: pointer;
+  text-align: center;
+}
+.confirm{
+  color: #40AFFE;
+  border-left: 1px solid #D0D0D0;
+}
 .manage-cont{
   min-height: 660px;
   border: 1px solid #DFDFDF;
@@ -96,6 +177,8 @@ button{cursor: pointer;}
   height: 30px;
   line-height: 40px;
   color: #666;
+  display: inline-block;
+  margin-top: 18px;
 }
 .toption {
   margin: 31px 37px;
@@ -104,9 +187,9 @@ button{cursor: pointer;}
 .tit{
   height: 30px;
   line-height: 30px;
-  margin: 40px 0 20px;
+  margin: 20px 0 32px;
   text-align: center;
-  font-size: 16px;
+  font-size: 20px;
 }
 .btn-up{
   width: 145px;

@@ -341,7 +341,6 @@ export default {
 </script>
 
 <style scoped>
-@import '../assets/libs/jedate.css';
 .content{
   width: 1200px;
   height: 800px;

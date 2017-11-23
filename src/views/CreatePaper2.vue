@@ -31,7 +31,7 @@
                           <span class="span1">第二步：上传已经录入成绩的模板</span>
                           <el-upload
                             class="upload-demo"
-                            action="https://jsonplaceholder.typicode.com/posts/"
+                            :action="webUrl"
                             :limit="1"
                             :on-exceed="handleExceed"
                             :before-upload="beforeFileUpload"
@@ -48,7 +48,7 @@
                               </label>
                               </a>
                           </div> -->
-                          
+
                       </div>
                       <div class="list">
                           <i>3</i>
@@ -119,6 +119,7 @@ export default {
         isDD: false,
         cur:[],
         downloadUrl: '',
+        webUrl:'/web/reportCard/importTemplate',
         version:'',
         studentsList:[],
     }
@@ -149,8 +150,8 @@ export default {
     $.ajax({
         url: '/web/reportCard/searchRecordStudentScores.do?examGroupDetailId='+id,
         type: 'get',
-        data: { 
-            
+        data: {
+
         },
         success:  function(res){
             console.log('StudentScores:',res);
@@ -162,8 +163,8 @@ export default {
     $.ajax({
             url: '/web/reportCard/getExamGroupVersion.do?examGroupDetailId='+id,
             type: 'get',
-            data: { 
-                
+            data: {
+
             },
             success:  function(res){
                 console.log('版本号:',res);
@@ -221,7 +222,6 @@ export default {
             type: 'get',
             success:  function(res){
                 console.log('importTemplate:',res);
-                
             }
           })
 
@@ -252,7 +252,7 @@ export default {
           "version": parseInt(ver)+1
       };
 
-      var param = JSON.stringify(data); 
+      var param = JSON.stringify(data);
 
       console.log('发布的data:',data)
 
@@ -265,7 +265,7 @@ export default {
       //       contentType: "application/json",
       //       success:  function(res){
       //           console.log('saveRecordExamScore:',res);
-                
+
       //       }
       //   });
     }
@@ -354,7 +354,7 @@ export default {
   margin-bottom: 28px;
 }
 .list span{
-  
+
 }
 .list .span1{
   display: inline-block;
@@ -446,7 +446,7 @@ export default {
   background: #c6c6c6;
 }*/
 .list .time{
-  width: 132px;
+  width: 152px;
   height: 28px;
   text-indent: 8px;
   line-height: 28px;

@@ -34,8 +34,8 @@
                   <button @click="login" class="register">登陆</button>
               </div>
           </div>
-        </div>
-        <div v-show="showLogin" class="bg"></div>
+      </div>
+      <div v-show="showLogin" class="bg"></div>
   </div>
 </template>
 
@@ -48,7 +48,7 @@ export default {
       showLogin: false,
       isLogged : false,
       user:{name:'',psw:''},
-      roleName : localStorage.getItem('roleName')|| ''
+      roleName : localStorage.getItem('roleName')|| 'ranjing'
     }
   },
   created () {
@@ -84,6 +84,8 @@ export default {
       var _this = this;
       var test = {name:'18866661001',pwd:'123456'};
 
+      window.localStorage.setItem('islogged','true');
+
       if( this.user.name.trim()=='' ){
           layer.open({content: '请输入用户名！',btn: '确定'});
           return
@@ -93,62 +95,57 @@ export default {
           return;
       }
 
-      $.ajax({
-          url: '/web/user/login.do',
-          type: 'get',
-          data: {
-              name:_this.user.name,
-              pwd:_this.user.psw
-          },
-          success:  function(data, textStatus, xhr){
-              console.log('login:',data);
-              if( data.code==200 ){
+      // $.ajax({
+      //     url: '/web/user/login.do',
+      //     type: 'get',
+      //     data: {
+      //         name:_this.user.name,
+      //         pwd:_this.user.psw
+      //     },
+      //     success:  function(data, textStatus, xhr){
+      //         console.log('login:',data);
+      //         if( data.code==200 ){
 
-                _this.roleName = data.message.userName;
+      //           _this.roleName = data.message.userName;
 
-                layer.open({
-                    type: 2,
-                    content: '正在登录...',
-                    time:2,
-                    success: function(){
+      //           layer.open({
+      //               type: 2,
+      //               content: '正在登录...',
+      //               time:2,
+      //               success: function(){
 
-                      setTimeout(function(){
-                          _this.showLogin = false;
-                          _this.isLogged = true;
-                          _this.$router.push({path: '/myinfo'});
-                          window.localStorage.setItem('islogged','true');
-                          window.localStorage.setItem('roleName',_this.roleName);
-                      },2000);
+      //                 setTimeout(function(){
+      //                     _this.showLogin = false;
+      //                     _this.isLogged = true;
+      //                     _this.$router.push({path: '/myinfo'});
+      //                     window.localStorage.setItem('islogged','true');
+      //                     window.localStorage.setItem('roleName',_this.roleName);
+      //                 },2000);
 
-                    }
-                  });
+      //               }
+      //             });
 
-              }else{
+      //         }else{
 
-                layer.open({
-                    type: 2,
-                    content: '登录中...',
-                    time:2,
-                    success: function(){
-                    setTimeout(function(){
-                          layer.open({
-                              content: '用户名或者密码错误！'
-                              ,btn: '确定'
-                            });
-                          _this.user={name:'',psw:''};
-                      },2000);
-                    }
-                  });
+      //           layer.open({
+      //               type: 2,
+      //               content: '登录中...',
+      //               time:2,
+      //               success: function(){
+      //               setTimeout(function(){
+      //                     layer.open({
+      //                         content: '用户名或者密码错误！'
+      //                         ,btn: '确定'
+      //                       });
+      //                     _this.user={name:'',psw:''};
+      //                 },2000);
+      //               }
+      //             });
 
 
-              }
-              //_this.isLogged = true;
-              //_this.roleName = data.message.userName;
-              //_this.$router.push({path: '/myinfo'});
-              //window.localStorage.setItem('islogged','true');
-              //window.localStorage.setItem('roleName',_this.roleName);
-          }
-      })
+      //         }
+      //     }
+      // })
     },
     clearSession () {
       this.isLogged = false;
