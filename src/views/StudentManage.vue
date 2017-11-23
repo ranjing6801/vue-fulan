@@ -4,10 +4,10 @@
       <button class="btn-up">上传学生名单</button>
       <button class="btn-down">下载模板</button>
     </div>
-    <div class="nothing-cont">
+    <div v-show="isList" class="nothing-cont">
       你还没有添加学生名单<br><button>去添加</button>
     </div>
-    <div class="mdcont">
+    <div v-show="!isList" class="mdcont">
       <table>
         <tr>
           <th width="15%">序号</th>
@@ -15,39 +15,19 @@
           <th width="20%">所属社群</th>
           <th width="20%">操作</th>
         </tr>
-        <tr>
-          <td>1</td>
-          <td>上海天山小学2017届一（1）班学生名单</td>
+        <tr v-for="(list,index) in lists">
+          <td>{{index+1}}</td>
+          <td>{{list.title}}</td>
           <td>
               <select>
-                <option>请选择</option>
+                <option v-for="opt in list.groups">{{opt.name}}</option>
               </select>
           </td>
-          <td><button @click="showDetail">详情</button>|<button @click='cue'>删除</button></td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>上海天山小学2017届一（1）班学生名单</td>
-          <td>
-              <select>
-                <option>请选择</option>
-              </select>
-          </td>
-          <td><button>详情</button>|<button @click='cue'>删除</button></td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>上海天山小学2017届一（1）班学生名单</td>
-          <td>
-              <select>
-                <option>请选择</option>
-              </select>
-          </td>
-          <td><button>详情</button>|<button @click='cue'>删除</button></td>
+          <td><button @click="showDetail(list,index)">详情</button>|<button @click="del(list,index)">删除</button></td>
         </tr>
       </table>
     </div>
-
+    <!-- <div v-show="showBg" class="bg"></div> -->
   </div>
 </template>
 
@@ -59,37 +39,66 @@ export default {
   name: 'managedetail',
   data () {
     return {
-        
+        showBg: false,
+        isList: false,
+        item: '上海天山小学2017届一（1）班学生名单',
+        lists: [
+            {
+              title:'上海育才中学2017届高一（1）班学生名单',
+              groups:[{name:'高一(1班)'},{name:'高一(2班)'},{name:'高一(3班)'},]
+            },
+            {
+              title:'上海天山中学2017届高一（2）班学生名单',
+              groups:[{name:'高一(1班)'},{name:'高一(2班)'},{name:'高一(3班)'},]
+            },
+            {
+              title:'上海西区中学2017届高一（3）班学生名单',
+              groups:[{name:'高一(1班)'},{name:'高一(2班)'},{name:'高一(3班)'},]
+            },
+            {
+              title:'上海无极中学2017届高一（4）班学生名单',
+              groups:[{name:'高一(1班)'},{name:'高一(2班)'},{name:'高一(3班)'},]
+            },
+            {
+              title:'上海晋源中学2017届高二（1）班学生名单',
+              groups:[{name:'高一(1班)'},{name:'高一(2班)'},{name:'高一(3班)'},]
+            }
+        ]
     }
   },
   components: {
-      
+
   },
   beforeCreate () {
-    
+
   },
   created () {
-    
+
   },
   methods:{
-    cue(){
-      var del = confirm('删除名单，名单内包含的学生信息也会被删除，是否继续？')
-      if(del == true){
-
-      }
+    showDetail(l,i){
+      this.$router.push({path:`/manageDetail/${l.title}`})
     },
-    showDetail(){
+    del (l,i) {
+      var _this = this;
 
-      this.$router.push({path:'/manageDetail'})
+      layer.open({
+        content: `删除名单,名单内包含的学生信息也被删除,是否继续?`,
+        btn: ['确定', '取消'],
+        yes: function(index){
+          layer.close(index);
+          _this.lists.splice(i,1);
+        },
+        no: function(index){
+          layer.close(index);
+        }
+      });
     }
   }
 }
 </script>
 
 <style scoped>
-button{cursor: pointer;}
-.clearfix:after {content: "."; display: block; height:0; clear:both; visibility: hidden;}
-.clearfix { *zoom:1; }
 .manage-cont{
   min-height: 660px;
   border: 1px solid #DFDFDF;
@@ -162,5 +171,14 @@ td button{
   background: #fff;
   border: none;
   font-size: 14px;
+}
+.bg{
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.5);
+  position: absolute;
 }
 </style>

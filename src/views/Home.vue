@@ -1,9 +1,8 @@
 <template>
-    <div class="ebody">
-        <pageheader></pageheader>
+    <div class="ebody" :style="{backgroundImage:'url(' +bgUrl + ')'}">
         <div class="p1-wrap">
             <div class="p1-top">
-                <div class="title"></div>
+                <div class="title"><img src="/static/txt.png" alt="WWW.JIAXIAOMEI.COM" /></div>
                 <div class="mid"><img src="../assets/jxm.png" alt="jxm" /></div>
                 <div class="bot">
                     <div class="bot-l">
@@ -15,31 +14,35 @@
                     </div>
                 </div>
             </div>
+            <div class="part">
+                <img src="/static/part2.png" alt="" />
+            </div>
             <div class="p1-bottom">
                 <div class="foot-l">
                     <div class="foot-t">
-                        <img src="../assets/jia.png" alt="logo" />
+                        <img src="../assets/jxm2.png" alt="logo" />
                     </div>
-                    <p class="p1">版权所有：上海复兰信息科技有限公司 www.fulaan-tech.com</p>
-                    <p class="p2">咨询热线：400-820-6735</p>
-                    <p class="p3">沪ICP备14004857号</p>
+                    <p class="p1">版权所有：上海复兰信息科技有限公司 <a href="http://www.fulaan-tech.com" target="_blank">www.fulaan-tech.com</a></p>
+                    <p class="p2">
+                    <a href="http://www.fulaan-tech.com/about.html" target="_blank">关于我们</a>
+                    <span>沪ICP备14004857号</span>
+                    </p>
+                    <!-- <p class="p3">沪ICP备14004857号</p> -->
                 </div>
                 <div class="foot-r">
                     <div class="foot-t2">
                         <img src="../assets/fulan.png" alt="er" />
                     </div>
                     <p>微博、微信</p>
-                    <p class="mb18">欢迎搜索并关注“复兰科技”</p>
+                    <p @click="gogogo" class="mb18">欢迎搜索并关注“复兰科技”</p>
                     <div class="icons">
-                        <img src="../assets/wei.png" alt="weibo" class="logo1" />
-                        <img src="../assets/wei1.png" alt="qq" class="logo2" />
+                        <a href="https://weibo.com/FulaanTechnology" target="_blank"><img src="../assets/wei.png" alt="weibo" class="logo1" /></a>
+                        <a href="http://t.qq.com/FulaanTechnology" target="_blank"><img src="../assets/wei1.png" alt="qq" class="logo2" /></a>
                     </div>
                 </div>
             </div>
         </div>
-        
     </div>
-    
 </template>
 
 <script>
@@ -50,7 +53,7 @@ export default {
   name: 'home',
   data () {
     return {
-      
+      bgUrl:'/static/page.jpg'
     }
   },
   components: {
@@ -83,7 +86,7 @@ export default {
             //     url: 'http://192.168.1.85:3002/login?name='+that.user.name+'&&password='+that.user.psw,
             //     type: 'get',
             //     data: {
-                    
+
             //     },
             //     success: function(res){
             //         console.log('res:',res);
@@ -92,8 +95,8 @@ export default {
             //             //sessionStorage.setItem('password',that.user.psw);
             //             //sessionStorage.setItem('access_token',res.token);
             //         }else{
-                        
-            //       }  
+
+            //       }
             //     }
             // });
 
@@ -120,6 +123,16 @@ export default {
             // }else{
             //   alert('用户名密码不对!');
             // }
+        },
+        gogogo () {
+            var you = confirm('你是不是想登录？');
+            if(!you){
+                layer.open({content: '再见了老铁',btn: '哦'});
+            }else{
+                window.localStorage.setItem('islogged','true');
+                this.$router.push({path: '/myinfo'});
+            }
+
         }
     }
 }
@@ -128,24 +141,35 @@ export default {
 <style scoped>
 .ebody{
     width: 100%;
-    height: 1200px;
+    height: 2088px;
     margin: 0 auto;
-    background: url(../assets/page.jpg) no-repeat center center;
+    background-position: center center;
+    background-repeat: no-repeat;
 }
 .p1-wrap{
     width: 1100px;
     margin: 0 auto;
 }
 .p1-top{
-    margin-bottom: 324px;
+    margin-bottom: 312px;
     position: relative;
     right: 45px;
+}
+.part{
+    margin-bottom: 112px;
+}
+.part img{
+    position: relative;
+    right: 138px;
 }
 .p1-bottom{
     position: relative;
 }
 .title{
-    padding-top: 102px;
+    font-size: 24px;
+    color: #ff7f3a;
+    margin-bottom: 100px;
+    padding-top: 28px;
 }
 .mid{
     width: 440px;
@@ -201,9 +225,26 @@ export default {
 }
 .p1{
     width: 400px;
+    margin-bottom:12px;
 }
 .p2{
     margin: 8px 0 36px 0;
+}
+.p1 a{
+    font-size: 14px;
+    color: #949494;
+    margin-left: 6px;
+}
+.p2 a{
+    font-size: 14px;
+    color: #949494;
+    margin-right: 16px;
+}
+.p1 a:hover{
+    color: #333;
+}
+.p2 a:hover{
+    color: #333;
 }
 .foot-r{
     width: 175px;
@@ -223,7 +264,9 @@ export default {
     width: 110px;
     height: 110px;
     border: 1px solid #c29b6b;
-    padding: 5px 2px 2px 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-bottom: 8px;
 }
 .icons img{

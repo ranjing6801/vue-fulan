@@ -47,7 +47,7 @@ export default new Router({
            component: StudentManage
         },
         {
-           path: '/manageDetail',
+           path: '/manageDetail/:title',
            name: 'managedetail',
            component: ManageDetail
         }
