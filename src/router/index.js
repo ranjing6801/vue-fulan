@@ -12,6 +12,7 @@ import StudentManage from '@/views/StudentManage'
 import ManageDetail from '@/views/ManageDetail'
 import CreateHomework from '@/views/CreateHomework'
 import CreateNotice from '@/views/CreateNotice'
+import Home2 from '@/views/Home2'
 
 Vue.use(Router)
 Vue.use(VueResource)
@@ -23,6 +24,11 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/Home2',
+      name: 'home2',
+      component: Home2
     },
     {
       path: '/myinfo',
