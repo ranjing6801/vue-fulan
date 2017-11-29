@@ -84,8 +84,7 @@
                         </div>
                         <div class="doudiv">
                             <img src="/static//comp05.png">
-                            <a class="fancybox" href="http://7xiclj.com1.z0.glb.clouddn.com/58656c823d4df96ad47517a3.jpg?imageView/1/h/500/w/500" data-fancybox-group="home" title="预览"><i>
-                            </i></a>
+                            <a @click='pv("/static/sf.jpg")'><i></i></a>
                             <div class="bg20"></div>
                         </div>
                     </div>
@@ -143,18 +142,25 @@
                         </div>
                         <div class="doudiv mb8">
                             <img src="/static//comp08.png">
-                            <a class="fancybox" href="http://7xiclj.com1.z0.glb.clouddn.com/57a493543d4df9703fd54c37.jpg?imageView/1/h/500/w/500" data-fancybox-group="home" title="预览"><i>
-                            </i></a>
+                            <a @click='pv("/static/bridge.jpg")'><i></i></a>
                             <div class="bg20"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- 播放器 -->
         <div class="wind-player" v-show='playershow'>
           <div id="player"></div>
           <div @click='closeplayer' class="x">×</div>
         </div>
+        
+        <!-- 图片预览 -->
+        <div class="wind-imgpreviw" v-show='previewshow'>
+          <img :src='mainsrc'>
+          <div class="x2" @click='closepreview'>×</div>
+        </div>
+
     </div>
     <!--背景-->
     <div class="bg2" v-show='bgshow'></div>
@@ -235,7 +241,9 @@ export default {
       ewmokshow:false,
       loginshow:true,
       useless:false,
-      playershow:false
+      playershow:false,
+      previewshow:false,
+      mainsrc:''
     }
   },
   components: {
@@ -289,6 +297,16 @@ export default {
       this.playershow=false
       this.bgshow=false
       $('#player').html('')
+    },
+    pv(imgsrc){
+      this.previewshow=true
+      this.bgshow=true
+      this.mainsrc=imgsrc
+
+    },
+    closepreview(){
+      this.previewshow=false
+      this.bgshow=false
     }
 
   }
@@ -313,6 +331,18 @@ export default {
   width: 630px;
   height: 390px;
 }
+.wind-imgpreviw{
+  width: 500px;
+  height: 500px;
+  border: 5px solid #fff;
+  background: #000;
+  border-radius: 3px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 99;
+}
 .x{
   width: 30px;
   height: 30px;
@@ -327,6 +357,21 @@ export default {
   text-align: center;
   font-size: 24px;
   transform: translate(318px,-228px);
+}
+.x2{
+  width: 30px;
+  height: 30px;
+  color: #fff;
+  cursor: pointer;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  background: #666;
+  border-radius: 100%;
+  line-height: 28px;
+  text-align: center;
+  font-size: 24px;
+  transform: translate(252px,-283px);
 }
 *{
   margin: 0;
