@@ -256,6 +256,7 @@ export default {
     },
     close(){
       this.windshow=false
+      this.bgshow=false
     },
     backLogin(){
       this.registershow=false;
